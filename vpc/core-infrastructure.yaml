@@ -27,7 +27,7 @@ Resources:
           Value: !Ref Project
 
 
-  PublicSubnetOne:
+  PublicSubnet1a:
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone:
@@ -41,7 +41,7 @@ Resources:
         - Key: Name
           Value: !Join ["-", [!Ref Project, "PUB-1a"]]
 
-  PublicSubnetTwo:
+  PublicSubnet1b:
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone:
@@ -79,16 +79,16 @@ Resources:
       DestinationCidrBlock: '0.0.0.0/0'
       GatewayId: !Ref 'InternetGateway'
 
-  PublicSubnetOneRouteTableAssociation:
+  PublicSubnet1aRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref PublicSubnetOne
+      SubnetId: !Ref PublicSubnet1a
       RouteTableId: !Ref PublicRouteTable
 
-  PublicSubnetTwoRouteTableAssociation:
+  PublicSubnet1bRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref PublicSubnetTwo
+      SubnetId: !Ref PublicSubnet1b
       RouteTableId: !Ref PublicRouteTable
 
 
@@ -98,3 +98,13 @@ Outputs:
     Value: !Ref VPC
     Export:
       Name: !Sub ${Project}:VpcId
+  PublicSubnet1a:
+    Description: Public subnet one
+    Value: !Ref PublicSubnet1a
+    Export:
+      Name: !Sub ${Project}:PublicSubnet1a
+  PublicSubnet1b:
+    Description: Public subnet two
+    Value: !Ref PublicSubnet1b
+    Export:
+      Name: !Sub ${Project}:PublicSubnet1b

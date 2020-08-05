@@ -25,8 +25,12 @@ node("ecs") {
         sh 'aws sts get-caller-identity'
     }
 
-    stage("Provision CFN") {
+    stage("Provision VPCs & SubNets") {
         sh 'bash cfn.sh ecs-vpc ./vpc/core-infrastructure.yaml'
+    }
+
+    stage("Provision ECS EC2 Cluster") {
+        sh 'bash cfn.sh ecs-ec2 ./ecs/ec2/cluster.yaml'
     }
 
 }
