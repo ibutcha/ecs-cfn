@@ -39,6 +39,8 @@ Resources:
                   - ec2:CreateSubnet
                   - ec2:ModifySubnetAttribute
                   - ec2:DeleteSubnet
+                  - ec2:CreateRouteTable
+                  - ec2:CreateInternetGateway
                 Resource: '*'
 
         - PolicyName: cfn-resource-specific
