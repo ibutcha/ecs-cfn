@@ -22,20 +22,28 @@ Resources:
 
       Path: /
       Policies:
-        - PolicyName: cfn-all-resources
+        - PolicyName: all-resources
           PolicyDocument:
             Version: 2012-10-17
             Statement:
               - Effect: Allow
-                Action: cloudformation:ListExports
+                Action:
+                  - cloudformation:ListExports
+                  - ec2:CreateVpc
+                  - ec2:DescribeVpcs
+                  - ec2:ModifyVpcAttribute
+                  - ec2:CreateTags
                 Resource: '*'
 
-        - PolicyName: cfn-all-resources
+        - PolicyName: cfn-resource-specific
           PolicyDocument:
             Version: 2012-10-17
             Statement:
               - Effect: Allow
-                Action: cloudformation:DescribeStacks
+                Action:
+                  - cloudformation:DescribeStacks
+                  - cloudformation:CreateStack
+                  - cloudformation:UpdateStack
                 Resource: !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ecs-vpc/*'
 
 Outputs:
