@@ -17,7 +17,7 @@ Resources:
         Statement:
           - Effect: Allow
             Principal:
-              AWS: 'arn:aws:iam::491435228159:root'
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
             Action: sts:AssumeRole
 
       Path: /
@@ -29,6 +29,14 @@ Resources:
               - Effect: Allow
                 Action: cloudformation:ListExports
                 Resource: '*'
+
+        - PolicyName: cfn-all-resources
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: cloudformation:DescribeStacks
+                Resource: !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ecs-vpc/*'
 
 Outputs:
   CfnRoleArn:
