@@ -18,5 +18,12 @@ node("ecs") {
             script: "aws sts assume-role --role-arn $AWS_JOB_ROLE --role-session-name jenkins-worker-role --duration-seconds 900",
             returnStdout: true
         ).trim()
+
+        sh 'aws sts get-caller-identity'
     }
+
+    stage("Provision CFN") {
+        sh 'bash cfn.sh ecs-vpc ./vpc/core-infrastructure.yaml'
+    }
+
 }
