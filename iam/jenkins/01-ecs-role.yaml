@@ -46,6 +46,12 @@ Resources:
                   - ec2:DeleteRouteTable
                   - ec2:DescribeRouteTables
                   - ec2:DescribeInternetGateways
+                  - ec2:DisassociateRouteTable
+                  - ec2:DetachInternetGateway
+
+                  - ec2:AssociateRouteTable
+                  - ec2:AttachInternetGateway
+                  - ec2:CreateRoute
                 Resource: '*'
 
         - PolicyName: cfn-resource-specific
