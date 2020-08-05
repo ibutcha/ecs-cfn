@@ -33,6 +33,12 @@ Resources:
                   - ec2:DescribeVpcs
                   - ec2:ModifyVpcAttribute
                   - ec2:CreateTags
+                  - ec2:DescribeAvailabilityZones
+                  - ec2:DescribeAccountAttributes
+                  - ec2:DescribeSubnets
+                  - ec2:CreateSubnet
+                  - ec2:ModifySubnetAttribute
+                  - ec2:DeleteSubnet
                 Resource: '*'
 
         - PolicyName: cfn-resource-specific
