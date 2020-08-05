@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: VPC and subnets for an ECS cluster
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: ecs-course
+
+Mappings:
+  SubnetConfig:
+    VPC:
+      CIDR: '172.16.0.0/16'
+    PublicOne:
+      CIDR: '172.16.0.0/24'
+    PublicTwo:
+      CIDR: '172.16.1.0/24'
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      CidrBlock: !FindInMap ['SubnetConfig', 'VPC', 'CIDR']
+      Tags:
+        - Key: Name
+          Value: !Ref EnvironmentName
