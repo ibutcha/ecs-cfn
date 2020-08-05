@@ -48,3 +48,12 @@ Resources:
       VpcId: !Ref 'VPC'
       CidrBlock: !FindInMap ['SubnetConfig', 'PublicTwo', 'CIDR']
       MapPublicIpOnLaunch: true
+
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  GatewayAttachement:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
