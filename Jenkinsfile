@@ -18,7 +18,10 @@ node("ecs") {
             script: "aws sts assume-role --role-arn $AWS_JOB_ROLE --role-session-name jenkins-worker-role --duration-seconds 900",
             returnStdout: true
         ).trim()
-
+        env.AWS_ACCESS_KEY_ID = awsCred.Credentials.AccessKeyId
+        env.AWS_SECRET_ACCESS_KEY = awsCred.Credentials.SecretAccessKey
+        env.AWS_SESSION_TOKEN = awsCred.Credentials.SessionToken
+        env.AWS_DEFAULT_REGION = AWS_REGION
         sh 'aws sts get-caller-identity'
     }
 
