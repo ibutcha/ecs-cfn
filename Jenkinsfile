@@ -12,4 +12,11 @@ node("ecs") {
             ]]
         ])
     }
+
+    stage("AssumeRole") {
+        def awsCred = readJSON text: sh (
+            script: "aws sts assume-role --role-arn $AWS_JOB_ROLE --role-session-name jenkins-worker-role --duration-seconds 900",
+            returnStdout: true
+        ).trim()
+    }
 }
