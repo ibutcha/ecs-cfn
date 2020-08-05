@@ -2,9 +2,9 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: VPC and subnets for an ECS cluster
 
 Parameters:
-  EnvironmentName:
+  Project:
     Type: String
-    Default: ecs-course
+    Default: ecs
 
 Mappings:
   SubnetConfig:
@@ -24,4 +24,4 @@ Resources:
       CidrBlock: !FindInMap ['SubnetConfig', 'VPC', 'CIDR']
       Tags:
         - Key: Name
-          Value: !Ref EnvironmentName
+          Value: !Ref Project

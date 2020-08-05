@@ -2,6 +2,10 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: IAM policy to be attached in jenkins instance profile role.
 
 Parameters:
+  Project:
+    Type: String
+    Default: ecs
+    Description:  Project name
   JenkinsIntanceProfileRoleName:
     Type: String
     Default: jenkins-ecs-instance-profile
@@ -21,7 +25,7 @@ Resources:
         Statement:
           - Effect: Allow
             Action: sts:AssumeRole
-            Resource: '*'
-
+            Resource:
+              - Fn::ImportValue: !Sub ${Project}:RoleArn
       Roles:
         - !Ref JenkinsIntanceProfileRoleName

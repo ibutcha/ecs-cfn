@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: IAM Role that allows the jenkins job to create infrustracture via cloudformation.
+
+Parameters:
+  Project:
+    Type: String
+    Default: ecs
+    Description: Project name
+
+Resources:
+  RootRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Join ["-", [!Ref Project, "Jenkins-Job-Role"]]
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: 'arn:aws:iam::491435228159:root'
+            Action: sts:AssumeRole
+
+      Path: /
+      Policies:
+        - PolicyName: cfn-all-resources
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: cloudformation:ListExports
+                Resource: '*'
+
+Outputs:
+  CfnRoleArn:
+    Description: The CFN arn role.
+    Value: !GetAtt  ["RootRole", "Arn"]
+    Export:
+      Name: !Sub ${Project}:RoleArn
