@@ -61,10 +61,11 @@ Resources:
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref 'VPC'
       Tags:
         - Key: Name
-          Value: !Join ["-"], [!Ref Project, "RouteTable"]
+          Value: !Join ["-", [!Ref Project, "RouteTable"]]
+      VpcId: !Ref 'VPC'
+
 
   PublicRoute:
     Type: AWS::EC2::Route
