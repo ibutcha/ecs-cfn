@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: IAM policy to be attached in jenkins instance profile role.
+
+Parameters:
+  JenkinsIntanceProfileRoleName:
+    Type: String
+    Default: jenkins-ecs-instance-profile
+    Description: The jenkins instance IAM profile role name.
+  InlinePolicyName:
+    Type: String
+    Default: jenkins_cfn_assume_role
+    Description: Name of the inline policy.
+
+Resources:
+  AssumeRole:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: jenkins_cfn_assume_role
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: sts:AssumeRole
+            Resource: '*'
+
+      Roles:
+        - !Ref JenkinsIntanceProfileRoleName
