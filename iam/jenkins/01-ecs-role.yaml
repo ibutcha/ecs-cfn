@@ -52,6 +52,8 @@ Resources:
                   - ecs:DeleteCluster
                   - autoscaling:DeleteLaunchConfiguration
                   - autoscaling:DeleteAutoScalingGroup
+                  - iam:RemoveRoleFromInstanceProfile
+                  - iam:DeleteInstanceProfile
 
                   - ec2:AssociateRouteTable
                   - ec2:AttachInternetGateway
@@ -73,8 +75,19 @@ Resources:
                   - autoscaling:DescribeAutoScalingInstances
                   - ec2:DescribeInstances
                   - ec2:DescribeKeyPairs
+                  - iam:CreateInstanceProfile
+                  - iam:AddRoleToInstanceProfile
                 Resource: '*'
-
+        - PolicyName: iam-pass-role
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - iam:PassRole
+                Resource: !Sub
+                  - 'arn:aws:iam::${AWS::AccountId}:role/${Project}-*'
+                  - { Project: !Ref Project }
         - PolicyName: cfn-resource-specific
           PolicyDocument:
             Version: 2012-10-17
