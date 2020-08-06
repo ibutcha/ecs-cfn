@@ -6,7 +6,7 @@ if ! aws cloudformation describe-stacks --stack-name $1 > /dev/null ; then
 
 	aws cloudformation create-stack \
 		--stack-name $1 \
-		--capabilities CAPABILITY_IAM \
+		--capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM\
 		--template-body file://$2
 
 	echo "Waiting for stack create to complete ..."
@@ -18,7 +18,7 @@ else
 	echo "Stack exist.."
 
 	update_output=$(aws cloudformation update-stack \
-		--capabilities CAPABILITY_IAM \
+		--capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM\
 		--stack-name $1 \
 		--template-body file://$2\
 	${@:5}  2>&1)
