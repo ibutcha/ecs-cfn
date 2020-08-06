@@ -88,6 +88,20 @@ Resources:
                 Resource: !Sub
                   - 'arn:aws:iam::${AWS::AccountId}:role/${Project}-*'
                   - { Project: !Ref Project }
+        - PolicyName: cfn-erc-permissions
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ecr:DescribeRepositories
+                  - ecr:CreateRepository
+                  - ecr:SetRepositoryPolicy
+                  - ecr:DeleteRepository # to be deleted
+                Resource:
+                  - !Sub
+                    - 'arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/${Project}/*'
+                    - { Project: !Ref Project }
         - PolicyName: cfn-resource-specific
           PolicyDocument:
             Version: 2012-10-17
@@ -100,7 +114,7 @@ Resources:
                 Resource:
                   - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ecs-vpc/*'
                   - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ecs-ec2/*'
-
+                  - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ecs-repositories/*'
 Outputs:
   CfnRoleArn:
     Description: The CFN arn role.

@@ -37,4 +37,8 @@ node("ecs") {
         sh 'bash cfn.sh ecs-repositories ./ecr/repositories.yaml'
     }
 
+    stage("Create/Update Ecs Execution Role") {
+        sh 'bash cfn.sh ecs-repositories ./iam/ecs/task-execution-role.yaml'
+    }
+
 }

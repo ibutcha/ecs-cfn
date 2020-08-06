@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: |
+  Task execution role that grants the Amazon ECS container agent permission to make AWS API calls.
+    - Pulling a container image from Amazon ECR
+    - to allow ecs task to create logs stream and push log events.
+
+Parameters:
+  Project:
+    Type: String
+    Default: ecs
+
+Resources:
+  ECSTaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join ["-", [!Ref Project, "ECSTaskExecutionRole"]]
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ecs-tasks.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: !Join ["-", [!Ref Project, "ECSTaskExecutionPermissions"]]
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                # Allow the ECS Tasks to download images from ECR
+                  - ecr:GetAuthorizationToken
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:BatchGetImage
+                # Allow the ECS tasks to upload logs to CloudWatch
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
