@@ -98,6 +98,9 @@ Resources:
                   - ecr:CreateRepository
                   - ecr:SetRepositoryPolicy
                   - ecr:DeleteRepository # to be deleted
+
+                  # IAM ECS EXECUTION ROLE
+                  - iam:GetRole
                 Resource:
                   - !Sub
                     - 'arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/${Project}/*'
