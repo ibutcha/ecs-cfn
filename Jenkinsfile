@@ -33,4 +33,8 @@ node("ecs") {
         sh 'bash cfn.sh ecs-ec2 ./ecs/ec2/cluster.yaml'
     }
 
+    stage("Create ECR Repositories") {
+        sh 'bash cfn.sh ecs-repositories ./ecr/repositories.yaml'
+    }
+
 }
