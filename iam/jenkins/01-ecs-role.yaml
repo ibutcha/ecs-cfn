@@ -48,12 +48,30 @@ Resources:
                   - ec2:DescribeInternetGateways
                   - ec2:DisassociateRouteTable
                   - ec2:DetachInternetGateway
+                  - ec2:DeleteSecurityGroup
+                  - ecs:DeleteCluster
+                  - autoscaling:DeleteLaunchConfiguration
+                  - autoscaling:DeleteAutoScalingGroup
 
                   - ec2:AssociateRouteTable
                   - ec2:AttachInternetGateway
                   - ec2:CreateRoute
-#                   ecs
+#                   ecs ec2
                   - ssm:GetParameters
+                  - ec2:DescribeImages
+                  - ec2:CreateSecurityGroup
+                  - ec2:DescribeSecurityGroups
+                  - ecs:DescribeClusters
+                  - ecs:CreateCluster
+                  - autoscaling:CreateLaunchConfiguration
+                  - autoscaling:CreateAutoScalingGroup
+                  - autoscaling:UpdateAutoScalingGroup
+                  - autoscaling:UpdateAutoScalingGroup # per resource
+                  - autoscaling:DescribeAutoScalingGroups
+                  - autoscaling:DescribeLaunchConfigurations
+                  - autoscaling:DescribeScalingActivities
+                  - autoscaling:DescribeAutoScalingInstances
+                  - ec2:DescribeInstances
                 Resource: '*'
 
         - PolicyName: cfn-resource-specific
