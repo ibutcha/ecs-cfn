@@ -38,7 +38,7 @@ node("ecs") {
     }
 
     stage("Create/Update Ecs Execution Role") {
-        sh 'bash cfn.sh ecs-repositories ./iam/ecs/task-execution-role.yaml CAPABILITY_NAMED_IAM'
+        sh 'bash cfn.sh ecs-taskExecutionRole ./iam/ecs/task-execution-role.yaml CAPABILITY_NAMED_IAM'
     }
 
 }
