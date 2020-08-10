@@ -78,6 +78,7 @@ Resources:
                   - iam:CreateInstanceProfile
                   - iam:AddRoleToInstanceProfile
                 Resource: '*'
+
         - PolicyName: iam-pass-role
           PolicyDocument:
             Version: 2012-10-17
@@ -88,6 +89,7 @@ Resources:
                 Resource: !Sub
                   - 'arn:aws:iam::${AWS::AccountId}:role/${Project}-*'
                   - { Project: !Ref Project }
+
         - PolicyName: cfn-erc-permissions
           PolicyDocument:
             Version: 2012-10-17
@@ -98,13 +100,25 @@ Resources:
                   - ecr:CreateRepository
                   - ecr:SetRepositoryPolicy
                   - ecr:DeleteRepository # to be deleted
-
-                  # IAM ECS EXECUTION ROLE
-                  - iam:GetRole
                 Resource:
                   - !Sub
                     - 'arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/${Project}/*'
                     - { Project: !Ref Project }
+
+        - PolicyName: iam-resource-specific
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - iam:GetRole
+                  - iam:CreateRole
+                  - iam:PutRolePolicy
+                Resource:
+                  - !Sub
+                    - 'arn:aws:iam::${AWS::AccountId}:role/${Project}-*'
+                    - { Project: !Ref Project }
+
         - PolicyName: cfn-resource-specific
           PolicyDocument:
             Version: 2012-10-17
@@ -115,9 +129,7 @@ Resources:
                   - cloudformation:CreateStack
                   - cloudformation:UpdateStack
                 Resource:
-                  - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ecs-vpc/*'
-                  - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ecs-ec2/*'
-                  - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ecs-repositories/*'
+                  - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ecs-*'
 Outputs:
   CfnRoleArn:
     Description: The CFN arn role.
