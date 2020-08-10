@@ -40,7 +40,7 @@ Resources:
   ECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: !Sub ${Project}-ec2
+      ClusterName: !Sub ${Project}-cluster-ec2
 
   # A security group for the EC2 hosts that will run the containers.
   # Rules are added based on what ingress you choose to add to the cluster.
