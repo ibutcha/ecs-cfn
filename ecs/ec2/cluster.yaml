@@ -18,7 +18,7 @@ Parameters:
 
   DesiredCapacity:
     Type: Number
-    Default: '1'
+    Default: '0'
     Description: Number of EC2 instances to launch in your ECS cluster.
 
   MaxSize:
@@ -61,7 +61,7 @@ Resources:
         - Fn::ImportValue: !Sub ${Project}:PublicSubnet1a
         - Fn::ImportValue: !Sub ${Project}:PublicSubnet1b
       LaunchConfigurationName: !Ref 'ContainerInstances'
-      MinSize: '1'
+      MinSize: '0'
       MaxSize: !Ref 'MaxSize'
       DesiredCapacity: !Ref 'DesiredCapacity'
     CreationPolicy:
